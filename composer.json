@@ -4,6 +4,9 @@
     "description": "First project from Hexlet",
     "license": "MIT",
     "autoload": {
+        "files": [
+            "src/Cli.php"
+        ],
         "psr-4": {
             "Hexlet\\Code\\": "src/"
         }
@@ -13,5 +16,7 @@
             "name": "kiatsyndesi"
         }
     ],
-    "require": {}
+    "require": {
+        "wp-cli/php-cli-tools": "^0.11.14"
+    }
 }
