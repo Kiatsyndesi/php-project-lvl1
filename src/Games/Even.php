@@ -10,7 +10,7 @@ function playEvenGame()
 {
     $name = Engine\universalGreeting();
 
-    $questions = [13, 4, 9, 10];
+    $questions = Engine\randomizeQuestions('even');
 
     Engine\gameLoop($questions, $name, 'even');
 }

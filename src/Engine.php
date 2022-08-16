@@ -16,6 +16,17 @@ function universalGreeting(): string
     return $name;
 }
 
+//Рандомайзер для вопросов к играм
+function randomizeQuestions($typeOfGame)
+{
+    switch ($typeOfGame) {
+        case 'even':
+            return array_map(function () {
+                return rand(0, 100);
+            }, array_fill(0, 3, null));
+    }
+}
+
 //Универсальный обработчик ответа от пользователя
 function userAnswerHandler($answer, $typeOfGame)
 {
