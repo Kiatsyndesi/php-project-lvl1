@@ -6,12 +6,21 @@ use function cli\line;
 use function cli\prompt;
 
 //Универсальное приветствие с возвратом имени для последующего использования
-function universalGreeting(): string
+function universalGreeting($typeOfGame): string
 {
     line('Welcome to the Brain Games!');
     $name = prompt('May I have your name?');
     line("Hello, %s", $name);
-    line("Answer \"yes\" if the number is even, otherwise answer \"no\".");
+
+    //Предложение сыграть разное для разных игр, каждому типу полагается свое
+    switch ($typeOfGame) {
+        case 'even':
+            line("Answer \"yes\" if the number is even, otherwise answer \"no\".");
+            break;
+        case 'calc':
+            line("What is the result of the expression?");
+            break;
+    }
 
     return $name;
 }
@@ -20,9 +29,21 @@ function universalGreeting(): string
 function randomizeQuestions($typeOfGame)
 {
     switch ($typeOfGame) {
+        //Рандомные вопросы для игры на четность
         case 'even':
             return array_map(function () {
                 return rand(0, 100);
+            }, array_fill(0, 3, null));
+        //Рандомные вопросы для калькулятора
+        case 'calc':
+            return array_map(function () {
+                $firstOperand = rand(0, 100);
+                $secondOperand = rand(0, 100);
+
+                $operations = ['+', '-', '*'];
+                $randOperation = $operations[rand(0, 2)];
+
+                return "{$firstOperand} {$randOperation} {$secondOperand}";
             }, array_fill(0, 3, null));
     }
 }
@@ -31,6 +52,7 @@ function randomizeQuestions($typeOfGame)
 function userAnswerHandler($answer, $typeOfGame)
 {
     switch ($typeOfGame) {
+        //обработчик для игры на четность
         case 'even':
             if ($answer === 'yes') {
                 return 'yes';
@@ -39,18 +61,42 @@ function userAnswerHandler($answer, $typeOfGame)
             } else {
                 return null;
             }
+        //Обработчик для калькулятора
+        case 'calc':
+            if (!is_int(intval($answer))) {
+                return null;
+            } else {
+                return intval($answer);
+            }
     }
 }
 
-//Обработчик правильных
+//Обработчик правильных ответов
 function correctAnswerHandler($optionFromQuestion, $typeOfGame)
 {
     switch ($typeOfGame) {
+        //обработчик для игры на четность
         case 'even':
             if ($optionFromQuestion % 2 === 0) {
                 return 'yes';
             } else {
                 return 'no';
+            }
+        //Обработчик для калькулятора
+        case 'calc':
+            $optionFromQuestion = explode(" ", $optionFromQuestion);
+
+            $firstOperand = $optionFromQuestion[0];
+            $operation = $optionFromQuestion[1];
+            $secondOperand = $optionFromQuestion[2];
+
+            switch ($operation) {
+                case '-':
+                    return intval($firstOperand - $secondOperand);
+                case '*':
+                    return intval($firstOperand * $secondOperand);
+                case '+':
+                    return intval($firstOperand + $secondOperand);
             }
     }
 }
@@ -67,7 +113,7 @@ function gameLoop($questions, $name, $typeOfGame)
         $correctAnswer = correctAnswerHandler($question, $typeOfGame);
 
         if (userAnswerHandler($userAnswer, $typeOfGame) === null) {
-            line("{$userAnswer} is wrong answer ;(. Correct answer was {$correctAnswer}.");
+            line("'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'.");
             line("Let's try again, %s", $name);
             return;
         }
@@ -76,7 +122,7 @@ function gameLoop($questions, $name, $typeOfGame)
             line("Correct!");
             $countOfRightAnswers++;
         } else {
-            line("{$userAnswer} is wrong answer ;(. Correct answer was {$correctAnswer}.");
+            line("'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'.");
             line("Let's try again, %s", $name);
             return;
         }

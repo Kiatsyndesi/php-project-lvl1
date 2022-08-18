@@ -8,7 +8,7 @@ use BrainGames\Engine;
 
 function playEvenGame()
 {
-    $name = Engine\universalGreeting();
+    $name = Engine\universalGreeting('even');
 
     $questions = Engine\randomizeQuestions('even');
 
