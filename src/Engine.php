@@ -5,6 +5,12 @@ namespace BrainGames\Engine;
 use function cli\line;
 use function cli\prompt;
 
+//Функция для нахождения наибольшего общего делителя
+function gcd($firstNumber, $secondNumber)
+{
+    return $secondNumber ? gcd($secondNumber, $firstNumber % $secondNumber) : $firstNumber;
+}
+
 //Универсальное приветствие с возвратом имени для последующего использования
 function universalGreeting($typeOfGame): string
 {
@@ -19,6 +25,9 @@ function universalGreeting($typeOfGame): string
             break;
         case 'calc':
             line("What is the result of the expression?");
+            break;
+        case 'gcd':
+            line("Find the greatest common divisor of given numbers.");
             break;
     }
 
@@ -45,6 +54,14 @@ function randomizeQuestions($typeOfGame)
 
                 return "{$firstOperand} {$randOperation} {$secondOperand}";
             }, array_fill(0, 3, null));
+        //Рандомные вопросы для нахождения НОД
+        case 'gcd':
+            return array_map(function () {
+                $firstNumber = rand(1, 100);
+                $secondNumber = rand(1, 100);
+
+                return "{$firstNumber} {$secondNumber}";
+            }, array_fill(0, 3, null));
     }
 }
 
@@ -61,7 +78,8 @@ function userAnswerHandler($answer, $typeOfGame)
             } else {
                 return null;
             }
-        //Обработчик для калькулятора
+        //Обработчик для калькулятора, НОД
+        case 'gcd':
         case 'calc':
             if (!is_int(intval($answer))) {
                 return null;
@@ -98,6 +116,11 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
                 case '+':
                     return intval($firstOperand + $secondOperand);
             }
+        //Обработчик для нахождения НОД
+        case 'gcd':
+            $numbersForGcd = explode(" ", $optionFromQuestion);
+
+            return gcd(intval($numbersForGcd[0]), intval($numbersForGcd[1]));
     }
 }
 
