@@ -38,6 +38,33 @@ function findMissingNumber($progression)
     return $missingNumber;
 }
 
+//Создание арифметической прогрессии с одним пропущенным элементом
+function makeRandomRange(): string
+{
+    $startNumberForRange = rand(1, 10);
+    $finishNumberForRange = rand(100, 120);
+    $step = rand(10, 30);
+
+    $progression = range($startNumberForRange, $finishNumberForRange, $step);
+    $progression[array_rand($progression)] = '..';
+
+    $progression = implode(' ', $progression);
+
+    return "{$progression}";
+}
+
+//создаем рандомное выражение для вопросов игре-калькуляторе
+function makeRandomExpression(): string
+{
+    $firstOperand = rand(0, 100);
+    $secondOperand = rand(0, 100);
+
+    $operations = ['+', '-', '*'];
+    $randOperation = $operations[rand(0, 2)];
+
+    return "{$firstOperand} {$randOperation} {$secondOperand}";
+}
+
 //Универсальное приветствие с возвратом имени для последующего использования
 function universalGreeting($typeOfGame): string
 {
@@ -76,13 +103,7 @@ function randomizeQuestions($typeOfGame)
         //Рандомные вопросы для калькулятора
         case 'calc':
             return array_map(function () {
-                $firstOperand = rand(0, 100);
-                $secondOperand = rand(0, 100);
-
-                $operations = ['+', '-', '*'];
-                $randOperation = $operations[rand(0, 2)];
-
-                return "{$firstOperand} {$randOperation} {$secondOperand}";
+                return makeRandomExpression();
             }, array_fill(0, 3, null));
         //Рандомные вопросы для нахождения НОД
         case 'gcd':
@@ -95,16 +116,7 @@ function randomizeQuestions($typeOfGame)
         //Рандомная арифметическая прогрессия
         case 'progression':
             return array_map(function () {
-                $startNumberForRange = rand(1, 10);
-                $finishNumberForRange = rand(100, 120);
-                $step = rand(10, 30);
-
-                $progression = range($startNumberForRange, $finishNumberForRange, $step);
-                $progression[array_rand($progression)] = '..';
-
-                $progression = implode(' ', $progression);
-
-                return "{$progression}";
+                return makeRandomRange();
             }, array_fill(0, 3, null));
     }
 }
