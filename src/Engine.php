@@ -6,9 +6,36 @@ use function cli\line;
 use function cli\prompt;
 
 //Функция для нахождения наибольшего общего делителя
-function gcd($firstNumber, $secondNumber)
+function findGcd($firstNumber, $secondNumber)
 {
-    return $secondNumber ? gcd($secondNumber, $firstNumber % $secondNumber) : $firstNumber;
+    return $secondNumber ? findGcd($secondNumber, $firstNumber % $secondNumber) : $firstNumber;
+}
+
+//Функция для нахождения пропущенного элемента в арифметической прогрессии
+function findMissingNumber($progression)
+{
+    $missingNumber = 0;
+    $lastIndex = count($progression) - 1;
+
+    for ($i = 0; $i <= $lastIndex; $i++) {
+        if ($progression[$i] === '..') {
+            if ($i === 0) {
+                $step = $progression[$i + 2] - $progression[$i + 1];
+
+                $missingNumber = $progression[$i + 1] - $step;
+            } elseif ($i === $lastIndex) {
+                $step = $progression[$i - 1] - $progression[$i - 2];
+
+                $missingNumber = $progression[$i - 1] + $step;
+            } else {
+                $step = ($progression[$i + 1] - $progression[$i - 1]) / 2;
+
+                $missingNumber = $progression[$i - 1] + $step;
+            }
+        }
+    }
+
+    return $missingNumber;
 }
 
 //Универсальное приветствие с возвратом имени для последующего использования
@@ -28,6 +55,9 @@ function universalGreeting($typeOfGame): string
             break;
         case 'gcd':
             line("Find the greatest common divisor of given numbers.");
+            break;
+        case 'progression':
+            line("What number is missing in the progression?");
             break;
     }
 
@@ -62,6 +92,20 @@ function randomizeQuestions($typeOfGame)
 
                 return "{$firstNumber} {$secondNumber}";
             }, array_fill(0, 3, null));
+        //Рандомная арифметическая прогрессия
+        case 'progression':
+            return array_map(function () {
+                $startNumberForRange = rand(1, 10);
+                $finishNumberForRange = rand(100, 120);
+                $step = rand(10, 30);
+
+                $progression = range($startNumberForRange, $finishNumberForRange, $step);
+                $progression[array_rand($progression)] = '..';
+
+                $progression = implode(' ', $progression);
+
+                return "{$progression}";
+            }, array_fill(0, 3, null));
     }
 }
 
@@ -80,6 +124,7 @@ function userAnswerHandler($answer, $typeOfGame)
             }
         //Обработчик для калькулятора, НОД
         case 'gcd':
+        case 'progression':
         case 'calc':
             if (!is_int(intval($answer))) {
                 return null;
@@ -120,7 +165,11 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
         case 'gcd':
             $numbersForGcd = explode(" ", $optionFromQuestion);
 
-            return gcd(intval($numbersForGcd[0]), intval($numbersForGcd[1]));
+            return findGcd(intval($numbersForGcd[0]), intval($numbersForGcd[1]));
+        case 'progression':
+            $optionFromQuestion = explode(" ", $optionFromQuestion);
+
+            return findMissingNumber($optionFromQuestion);
     }
 }
 
