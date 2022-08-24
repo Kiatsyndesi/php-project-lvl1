@@ -6,3 +6,5 @@
 ## Gameplay from Brain-even game: [link](https://asciinema.org/a/zyNTP15EHgkDcywl49Xq5EQad)
 
 ## Gameplay from Brain-calc game: [link](https://asciinema.org/a/Xg3P5H3ItxlsoNmfdwbymV9p3)
+
+## Gameplay from Brain-gcd game: [link](https://asciinema.org/a/g60iuQTMiR0nbkwVxrcKzdoeo)
