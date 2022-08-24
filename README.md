@@ -8,3 +8,5 @@
 ## Gameplay from Brain-calc game: [link](https://asciinema.org/a/Xg3P5H3ItxlsoNmfdwbymV9p3)
 
 ## Gameplay from Brain-gcd game: [link](https://asciinema.org/a/g60iuQTMiR0nbkwVxrcKzdoeo)
+
+## Gameplay from Brain-progression game: [link](https://asciinema.org/a/fYnqxw9FAYqrJdDBCgTNT4jGj)
