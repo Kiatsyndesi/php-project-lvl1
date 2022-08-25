@@ -240,7 +240,7 @@ function gameLoop($questions, $name, $typeOfGame)
 
         if (userAnswerHandler($userAnswer, $typeOfGame) === null) {
             line("'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'.");
-            line("Let's try again, %s", $name);
+            line("Let's try again, %s!", $name);
             return;
         }
 
@@ -249,7 +249,7 @@ function gameLoop($questions, $name, $typeOfGame)
             $countOfRightAnswers++;
         } else {
             line("'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'.");
-            line("Let's try again, %s", $name);
+            line("Let's try again, %s!", $name);
             return;
         }
     }
