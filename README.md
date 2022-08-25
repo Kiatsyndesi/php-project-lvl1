@@ -10,3 +10,5 @@
 ## Gameplay from Brain-gcd game: [link](https://asciinema.org/a/g60iuQTMiR0nbkwVxrcKzdoeo)
 
 ## Gameplay from Brain-progression game: [link](https://asciinema.org/a/fYnqxw9FAYqrJdDBCgTNT4jGj)
+
+## Gameplay from Brain-prime game: [link](https://asciinema.org/a/bDimiLZUJDM1uGMGIJhFDJcdx)

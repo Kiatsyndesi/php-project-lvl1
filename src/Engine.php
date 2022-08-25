@@ -65,6 +65,7 @@ function makeRandomExpression(): string
     return "{$firstOperand} {$randOperation} {$secondOperand}";
 }
 
+//функция для выполнения операции с выражением
 function makeCalculation($optionFromQuestion): int
 {
     $optionFromQuestion = explode(" ", $optionFromQuestion);
@@ -89,6 +90,21 @@ function makeCalculation($optionFromQuestion): int
     return $correctAnswer;
 }
 
+//функция для проверки простое число или нет
+function isPrime($number): string
+{
+    if ($number === 1) {
+        return 'no';
+    }
+
+    for ($i = 2, $division = $number / 2; $i <= $division; $i++) {
+        if ($number % $i == 0) {
+            return 'no';
+        }
+    }
+    return 'yes';
+}
+
 //Универсальное приветствие с возвратом имени для последующего использования
 function universalGreeting($typeOfGame): string
 {
@@ -110,6 +126,9 @@ function universalGreeting($typeOfGame): string
         case 'progression':
             line("What number is missing in the progression?");
             break;
+        case 'prime':
+            line("Answer \"yes\" if given number is prime. Otherwise answer \"no\".");
+            break;
     }
 
     return $name;
@@ -119,7 +138,8 @@ function universalGreeting($typeOfGame): string
 function randomizeQuestions($typeOfGame)
 {
     switch ($typeOfGame) {
-        //Рандомные вопросы для игры на четность
+        //Рандомные вопросы для игры на четность и простые числа
+        case 'prime':
         case 'even':
             return array_map(function () {
                 return rand(0, 100);
@@ -149,7 +169,8 @@ function randomizeQuestions($typeOfGame)
 function userAnswerHandler($answer, $typeOfGame)
 {
     switch ($typeOfGame) {
-        //обработчик для игры на четность
+        //обработчик для игры на четность и игры на простые числа
+        case 'prime':
         case 'even':
             if ($answer === 'yes') {
                 return 'yes';
@@ -201,6 +222,8 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
             $missingNumber = findMissingNumber($optionFromQuestion);
 
             return $missingNumber;
+        case 'prime':
+            return isPrime($optionFromQuestion);
     }
 }
 
