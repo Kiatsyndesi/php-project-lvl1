@@ -65,6 +65,30 @@ function makeRandomExpression(): string
     return "{$firstOperand} {$randOperation} {$secondOperand}";
 }
 
+function makeCalculation($optionFromQuestion): int
+{
+    $optionFromQuestion = explode(" ", $optionFromQuestion);
+
+    $firstOperand = $optionFromQuestion[0];
+    $operation = $optionFromQuestion[1];
+    $secondOperand = $optionFromQuestion[2];
+
+    $correctAnswer = 0;
+
+    switch ($operation) {
+        case '-':
+            $correctAnswer = intval($firstOperand - $secondOperand);
+            break;
+        case '*':
+            $correctAnswer = intval($firstOperand * $secondOperand);
+            break;
+        case '+':
+            $correctAnswer = intval($firstOperand + $secondOperand);
+            break;
+    }
+    return $correctAnswer;
+}
+
 //Универсальное приветствие с возвратом имени для последующего использования
 function universalGreeting($typeOfGame): string
 {
@@ -159,23 +183,7 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
             }
         //Обработчик для калькулятора
         case 'calc':
-            $optionFromQuestion = explode(" ", $optionFromQuestion);
-
-            $firstOperand = $optionFromQuestion[0];
-            $operation = $optionFromQuestion[1];
-            $secondOperand = $optionFromQuestion[2];
-
-            switch ($operation) {
-                case '-':
-                    $correctAnswer = intval($firstOperand - $secondOperand);
-                    return $correctAnswer;
-                case '*':
-                    $correctAnswer = intval($firstOperand * $secondOperand);
-                    return $correctAnswer;
-                case '+':
-                    $correctAnswer = intval($firstOperand + $secondOperand);
-                    return $correctAnswer;
-            }
+            return makeCalculation($optionFromQuestion);
         //Обработчик для нахождения НОД
         case 'gcd':
             $numbersForGcd = explode(" ", $optionFromQuestion);
