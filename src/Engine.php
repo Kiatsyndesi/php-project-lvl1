@@ -6,13 +6,13 @@ use function cli\line;
 use function cli\prompt;
 
 //Функция для нахождения наибольшего общего делителя
-function findGcd($firstNumber, $secondNumber)
+function findGcd(int $firstNumber, int $secondNumber): int
 {
     return $secondNumber ? findGcd($secondNumber, $firstNumber % $secondNumber) : $firstNumber;
 }
 
 //Функция для нахождения пропущенного элемента в арифметической прогрессии
-function findMissingNumber($progression)
+function findMissingNumber(array $progression): int
 {
     $missingNumber = 0;
     $lastIndex = count($progression) - 1;
@@ -66,32 +66,32 @@ function makeRandomExpression(): string
 }
 
 //функция для выполнения операции с выражением
-function makeCalculation($optionFromQuestion): int
+function makeCalculation(string $optionFromQuestion): int
 {
     $optionFromQuestion = explode(" ", $optionFromQuestion);
 
-    $firstOperand = $optionFromQuestion[0];
+    $firstOperand = intval($optionFromQuestion[0]);
     $operation = $optionFromQuestion[1];
-    $secondOperand = $optionFromQuestion[2];
+    $secondOperand = intval($optionFromQuestion[2]);
 
     $correctAnswer = 0;
 
     switch ($operation) {
         case '-':
-            $correctAnswer = intval($firstOperand - $secondOperand);
+            $correctAnswer = $firstOperand - $secondOperand;
             break;
         case '*':
-            $correctAnswer = intval($firstOperand * $secondOperand);
+            $correctAnswer = $firstOperand * $secondOperand;
             break;
         case '+':
-            $correctAnswer = intval($firstOperand + $secondOperand);
+            $correctAnswer = $firstOperand + $secondOperand;
             break;
     }
     return $correctAnswer;
 }
 
 //функция для проверки простое число или нет
-function isPrime($number): string
+function isPrime(int $number): string
 {
     if ($number <= 1) {
         return 'no';
@@ -106,7 +106,7 @@ function isPrime($number): string
 }
 
 //Универсальное приветствие с возвратом имени для последующего использования
-function universalGreeting($typeOfGame): string
+function universalGreeting(string $typeOfGame): string
 {
     line('Welcome to the Brain Games!');
     $name = prompt('May I have your name?');
@@ -135,7 +135,7 @@ function universalGreeting($typeOfGame): string
 }
 
 //Рандомайзер для вопросов к играм
-function randomizeQuestions($typeOfGame)
+function randomizeQuestions(string $typeOfGame)
 {
     switch ($typeOfGame) {
         //Рандомные вопросы для игры на четность и простые числа
@@ -166,7 +166,7 @@ function randomizeQuestions($typeOfGame)
 }
 
 //Универсальный обработчик ответа от пользователя
-function userAnswerHandler($answer, $typeOfGame)
+function userAnswerHandler(string $answer, string $typeOfGame)
 {
     switch ($typeOfGame) {
         //обработчик для игры на четность и игры на простые числа
@@ -183,20 +183,14 @@ function userAnswerHandler($answer, $typeOfGame)
         case 'gcd':
         case 'progression':
         case 'calc':
-            $finalAnswer = 0;
-
-            if (!is_int(intval($answer))) {
-                $finalAnswer = null;
-            } else {
-                $finalAnswer = intval($answer);
-            }
+            $finalAnswer = intval($answer);
 
             return $finalAnswer;
     }
 }
 
 //Обработчик правильных ответов
-function correctAnswerHandler($optionFromQuestion, $typeOfGame)
+function correctAnswerHandler(string $optionFromQuestion, string $typeOfGame)
 {
     switch ($typeOfGame) {
         //обработчик для игры на четность
@@ -228,7 +222,7 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
 }
 
 //Универсальный луп для ввода ответов и подсчета правильных ответов
-function gameLoop($questions, $name, $typeOfGame)
+function gameLoop(array $questions, string $name, string $typeOfGame)
 {
     $countOfRightAnswers = 0;
 
