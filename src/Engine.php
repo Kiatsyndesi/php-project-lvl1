@@ -198,7 +198,9 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
         case 'progression':
             $optionFromQuestion = explode(" ", $optionFromQuestion);
 
-            return findMissingNumber($optionFromQuestion);
+            $missingNumber = findMissingNumber($optionFromQuestion);
+
+            return $missingNumber;
     }
 }
 
