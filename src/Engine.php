@@ -167,11 +167,14 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
 
             switch ($operation) {
                 case '-':
-                    return intval($firstOperand - $secondOperand);
+                    $correctAnswer = intval($firstOperand - $secondOperand);
+                    return $correctAnswer;
                 case '*':
-                    return intval($firstOperand * $secondOperand);
+                    $correctAnswer = intval($firstOperand * $secondOperand);
+                    return $correctAnswer;
                 case '+':
-                    return intval($firstOperand + $secondOperand);
+                    $correctAnswer = intval($firstOperand + $secondOperand);
+                    return $correctAnswer;
             }
         //Обработчик для нахождения НОД
         case 'gcd':
