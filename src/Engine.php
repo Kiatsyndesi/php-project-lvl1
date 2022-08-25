@@ -255,6 +255,6 @@ function gameLoop($questions, $name, $typeOfGame)
     }
 
     if ($countOfRightAnswers === count($questions)) {
-        line("Congratulations, %s", $name);
+        line("Congratulations, %s!", $name);
     }
 }
