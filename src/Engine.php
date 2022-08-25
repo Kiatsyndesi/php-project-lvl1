@@ -8,7 +8,12 @@ use function cli\prompt;
 //Функция для нахождения наибольшего общего делителя
 function findGcd(int $firstNumber, int $secondNumber): int
 {
-    return $secondNumber ? findGcd($secondNumber, $firstNumber % $secondNumber) : $firstNumber;
+    /*return $secondNumber ? findGcd($secondNumber, $firstNumber % $secondNumber) : $firstNumber;*/
+    if ($secondNumber === 0) {
+        return $firstNumber;
+    }
+
+    return findGcd($secondNumber, $firstNumber % $secondNumber);
 }
 
 //Функция для нахождения пропущенного элемента в арифметической прогрессии
@@ -217,7 +222,7 @@ function correctAnswerHandler(string $optionFromQuestion, string $typeOfGame)
 
             return $missingNumber;
         case 'prime':
-            return isPrime($optionFromQuestion);
+            return isPrime(intval($optionFromQuestion));
     }
 }
 
