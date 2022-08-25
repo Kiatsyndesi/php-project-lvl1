@@ -162,11 +162,15 @@ function userAnswerHandler($answer, $typeOfGame)
         case 'gcd':
         case 'progression':
         case 'calc':
+            $finalAnswer = 0;
+
             if (!is_int(intval($answer))) {
-                return null;
+                $finalAnswer = null;
             } else {
-                return intval($answer);
+                $finalAnswer = intval($answer);
             }
+
+            return $finalAnswer;
     }
 }
 
@@ -188,7 +192,9 @@ function correctAnswerHandler($optionFromQuestion, $typeOfGame)
         case 'gcd':
             $numbersForGcd = explode(" ", $optionFromQuestion);
 
-            return findGcd(intval($numbersForGcd[0]), intval($numbersForGcd[1]));
+            $correctGcd = findGcd(intval($numbersForGcd[0]), intval($numbersForGcd[1]));
+
+            return $correctGcd;
         case 'progression':
             $optionFromQuestion = explode(" ", $optionFromQuestion);
 
