@@ -93,7 +93,7 @@ function makeCalculation($optionFromQuestion): int
 //функция для проверки простое число или нет
 function isPrime($number): string
 {
-    if ($number === 1) {
+    if ($number <= 1) {
         return 'no';
     }
 
