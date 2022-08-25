@@ -42,7 +42,7 @@ function findMissingNumber($progression)
 function makeRandomRange(): string
 {
     $startNumberForRange = rand(1, 10);
-    $finishNumberForRange = rand(100, 120);
+    $finishNumberForRange = rand(150, 160);
     $step = rand(10, 30);
 
     $progression = range($startNumberForRange, $finishNumberForRange, $step);
